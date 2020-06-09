@@ -203,68 +203,7 @@ namespace Proyecto
 
                     TextBox SearchBar = new TextBox();
                     this.Controls.Add(SearchBar);
-
-                }
-
-                void PlaylistsButton_Click(object sender3, EventArgs e3)
-                {
-                    this.Controls.Remove(WelcomeBackLabel);
-                    this.Controls.Remove(OptionsLabel);
-                    this.Controls.Remove(MusicOrVidsButton);
-                    this.Controls.Remove(PlaylistsButton);
-                    this.Controls.Remove(OtherAccountsButton);
-
-                    ListBox playlistsList = new ListBox();
-                    User u = Spotflix.GetUserDB[username];
-                    List<Playlist> p = u.GetPlaylist();
-                    if (p.Count == 0)
-                    {
-                        Label warningLabel = new Label();
-                        warningLabel.Text = "You have no playlists!";
-                    }
-
-                    else
-                    {
-                        foreach (Playlist i in p)
-                        {
-                            string pName = i.GetName();
-                            playlistsList.Items.Add(pName);
-                        }
-
-                        this.Controls.Add(playlistsList);
-                        string chosenPlaylist = (string)playlistsList.SelectedItem;
-                        Playlist thePlaylist = new Playlist("a", true, u);
-
-                        foreach (Playlist i in p)
-                        {
-                            if (i.GetName() == chosenPlaylist)
-                            {
-                                thePlaylist = i;
-                            }
-                        }
-
-                        ListBox mediaListBox = new ListBox();
-                        foreach (Media m in thePlaylist.GetList())
-                        {
-                            string mName = m.GetName();
-                            mediaListBox.Items.Add(mName);
-                        }
-                        this.Controls.Add(mediaListBox);
-
-                    }
-                }
-
-                void OtherAccountsButton_Click(object sender3, EventArgs e3)
-                {
-                    this.Controls.Remove(WelcomeBackLabel);
-                    this.Controls.Remove(OptionsLabel);
-                    this.Controls.Remove(MusicOrVidsButton);
-                    this.Controls.Remove(PlaylistsButton);
-                    this.Controls.Remove(OtherAccountsButton);
-
-                    TextBox searchBar = new TextBox();
-                    this.Controls.Add(searchBar);
-                    string search = searchBar.Text;
+                    string search = SearchBar.Text;
 
                     Label filterOptionsLabel = new Label();
                     filterOptionsLabel.Text = "Do you want to use any filters?";
@@ -381,20 +320,125 @@ namespace Proyecto
                         }
 
                         Filter f = new Filter();
-                        List<object> filteredSearchResults = f.FilteredSearch(filtersUsed, search);
+                        (List<Song>, List<Video>) filteredSearchResults = f.FilteredSearch(filtersUsed, search);
                         ListBox searchResLB = new ListBox();
 
-                        foreach(object o in filteredSearchResults)
+                    }
+
+                    else
+                    {
+                        Filter f = new Filter();
+                        List<object> searchResults = f.Search(search);
+                    }
+
+                }
+
+                void PlaylistsButton_Click(object sender3, EventArgs e3)
+                {
+                    this.Controls.Remove(WelcomeBackLabel);
+                    this.Controls.Remove(OptionsLabel);
+                    this.Controls.Remove(MusicOrVidsButton);
+                    this.Controls.Remove(PlaylistsButton);
+                    this.Controls.Remove(OtherAccountsButton);
+
+                    ListBox playlistsList = new ListBox();
+                    User u = Spotflix.GetUserDB[username];
+                    List<Playlist> p = u.GetPlaylist();
+                    if (p.Count == 0)
+                    {
+                        Label warningLabel = new Label();
+                        warningLabel.Text = "You have no playlists!";
+                    }
+
+                    else
+                    {
+                        foreach (Playlist i in p)
                         {
-                            searchResLB.Items.Add();
+                            string pName = i.GetName();
+                            playlistsList.Items.Add(pName);
+                        }
+
+                        this.Controls.Add(playlistsList);
+                        string chosenPlaylist = (string)playlistsList.SelectedItem;
+                        Playlist thePlaylist = new Playlist("a", true, u);
+
+                        foreach (Playlist i in p)
+                        {
+                            if (i.GetName() == chosenPlaylist)
+                            {
+                                thePlaylist = i;
+                            }
+                        }
+
+                        ListBox mediaListBox = new ListBox();
+                        foreach (Media m in thePlaylist.GetList())
+                        {
+                            string mName = m.GetName();
+                            mediaListBox.Items.Add(mName);
+                        }
+                        this.Controls.Add(mediaListBox);
+
+                    }
+                }
+
+                void OtherAccountsButton_Click(object sender3, EventArgs e3)
+                {
+                    this.Controls.Remove(WelcomeBackLabel);
+                    this.Controls.Remove(OptionsLabel);
+                    this.Controls.Remove(MusicOrVidsButton);
+                    this.Controls.Remove(PlaylistsButton);
+                    this.Controls.Remove(OtherAccountsButton);
+
+                    Label searchBarLabel = new Label();
+                    searchBarLabel.Text = "Search for other accounts by their username";
+                    this.Controls.Add(searchBarLabel);
+
+                    TextBox searchBar = new TextBox();
+                    this.Controls.Add(searchBar);
+                    string search = searchBar.Text;
+                    User account = Spotflix.GetUserDB[username];
+                    bool proof = false;
+
+                    if (Spotflix.GetUserDB.ContainsKey(search) == true)
+                    {
+                        account = Spotflix.GetUserDB[search];
+                        proof = true;
+                    }
+
+                    Label searchedUserLabel = new Label();
+                    if (proof == true)
+                    {
+                        searchedUserLabel.Text = account.GetUsername();
+                        List<string> optionsList = new List<string>
+                        { "See playlists", "Follow", "See followers" };
+                        ListBox userAttributes = new ListBox();
+                        foreach (string s in optionsList)
+                        {
+                            userAttributes.Items.Add(s);
+                        }
+                        this.Controls.Add(userAttributes);
+
+                        string selectedOption = (string)userAttributes.SelectedItem;
+
+                        if (selectedOption == "See playlists")
+                        {
+                            ListBox playlistLB = new ListBox();
+                            List<Playlist> p = account.GetPlaylist();
+                            foreach(Playlist p2 in p)
+                            {
+                                string pName = p2.GetName();
+                                playlistLB.Items.Add(pName);
+                            }
+                            this.Controls.Add(playlistLB);
+
                         }
 
                     }
-                    
                     else
                     {
-
+                        searchedUserLabel.Text = "No user was found";
                     }
+                    this.Controls.Add(searchedUserLabel);
                 }
 
             }
