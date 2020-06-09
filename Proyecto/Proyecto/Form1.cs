@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -249,6 +250,149 @@ namespace Proyecto
                             mediaListBox.Items.Add(mName);
                         }
                         this.Controls.Add(mediaListBox);
+
+                    }
+                }
+
+                void OtherAccountsButton_Click(object sender3, EventArgs e3)
+                {
+                    this.Controls.Remove(WelcomeBackLabel);
+                    this.Controls.Remove(OptionsLabel);
+                    this.Controls.Remove(MusicOrVidsButton);
+                    this.Controls.Remove(PlaylistsButton);
+                    this.Controls.Remove(OtherAccountsButton);
+
+                    TextBox searchBar = new TextBox();
+                    this.Controls.Add(searchBar);
+                    string search = searchBar.Text;
+
+                    Label filterOptionsLabel = new Label();
+                    filterOptionsLabel.Text = "Do you want to use any filters?";
+                    this.Controls.Add(filterOptionsLabel);
+
+                    Label filterYesLabel = new Label();
+                    filterYesLabel.Text = "Yes";
+                    this.Controls.Add(filterYesLabel);
+                    RadioButton filterYes = new RadioButton();
+                    this.Controls.Add(filterYes);
+
+                    Label filterNoLabel = new Label();
+                    filterNoLabel.Text = "No";
+                    this.Controls.Add(filterNoLabel);
+                    RadioButton filterNo = new RadioButton();
+                    this.Controls.Add(filterNo);
+
+                    if (filterYes.Checked == true)
+                    {
+                        List<int> filtersUsed = new List<int>();
+
+                        Label optionsLabel = new Label();
+                        optionsLabel.Text = "What filters do you want to use?";
+                        this.Controls.Add(optionsLabel);
+
+                        //Song filter options
+                        Label songFiltersLabel = new Label();
+                        songFiltersLabel.Text = "For songs: ";
+                        this.Controls.Add(songFiltersLabel);
+
+                        CheckBox songName = new CheckBox();
+                        songName.Text = "Name";
+                        this.Controls.Add(songName);
+                        if (songName.Checked == true)
+                        {
+                            filtersUsed.Add(1);
+                        }
+
+                        CheckBox songArtist = new CheckBox();
+                        songArtist.Text = "Artist";
+                        this.Controls.Add(songArtist);
+                        if (songArtist.Checked == true)
+                        {
+                            filtersUsed.Add(2);
+                        }
+
+                        CheckBox songAlbum = new CheckBox();
+                        songAlbum.Text = "Album";
+                        this.Controls.Add(songAlbum);
+                        if (songAlbum.Checked == true)
+                        {
+                            filtersUsed.Add(3);
+                        }
+
+                        CheckBox songGenre = new CheckBox();
+                        songGenre.Text = "Genre";
+                        this.Controls.Add(songGenre);
+                        if (songGenre.Checked == true)
+                        {
+                            filtersUsed.Add(4);
+                        }
+
+                        //Video filter options
+                        Label videoFiltersLabel = new Label();
+                        videoFiltersLabel.Text = "For videos: ";
+                        this.Controls.Add(videoFiltersLabel);
+
+                        CheckBox videoName = new CheckBox();
+                        videoName.Text = "Name";
+                        this.Controls.Add(videoName);
+                        if (videoName.Checked == true)
+                        {
+                            filtersUsed.Add(5);
+                        }
+
+                        CheckBox videoCreator = new CheckBox();
+                        videoCreator.Text = "Creator";
+                        this.Controls.Add(videoCreator);
+                        if (videoCreator.Checked == true)
+                        {
+                            filtersUsed.Add(6);
+                        }
+
+                        CheckBox videoGenre = new CheckBox();
+                        videoGenre.Text = "Genre";
+                        this.Controls.Add(videoGenre);
+                        if (videoGenre.Checked == true)
+                        {
+                            filtersUsed.Add(7);
+                        }
+
+                        CheckBox videoCat = new CheckBox();
+                        videoCat.Text = "Category";
+                        this.Controls.Add(videoCat);
+                        if (videoCat.Checked == true)
+                        {
+                            filtersUsed.Add(8);
+                        }
+
+                        CheckBox videoDirector = new CheckBox();
+                        videoDirector.Text = "Director";
+                        this.Controls.Add(videoDirector);
+                        if (videoDirector.Checked == true)
+                        {
+                            filtersUsed.Add(9);
+                        }
+
+                        CheckBox videoStudio = new CheckBox();
+                        videoStudio.Text = "Studio";
+                        this.Controls.Add(videoStudio);
+                        if (videoStudio.Checked == true)
+                        {
+                            filtersUsed.Add(10);
+                        }
+
+                        Filter f = new Filter();
+                        List<object> filteredSearchResults = f.FilteredSearch(filtersUsed, search);
+                        ListBox searchResLB = new ListBox();
+
+                        foreach(object o in filteredSearchResults)
+                        {
+                            searchResLB.Items.Add();
+                        }
+
+                    }
+                    
+                    else
+                    {
 
                     }
                 }
