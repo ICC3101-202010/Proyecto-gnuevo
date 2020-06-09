@@ -17,5 +17,25 @@ namespace Proyecto
             Followers = followers;
             Studio = studio;
         }
+
+        public List<Album> GetAlbums()
+        {
+            return Albums;
+        }
+
+        public List<Song> GetSongs()
+        {
+            return Songs;
+        }
+
+        public List<User> GetFollowers()
+        {
+            return Followers;
+        }
+
+        public string GetStudio()
+        {
+            return Studio;
+        }
     }
 }

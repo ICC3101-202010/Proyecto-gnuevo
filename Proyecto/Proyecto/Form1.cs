@@ -189,6 +189,10 @@ namespace Proyecto
                 OtherAccountsButton.Text = "Look for other accounts";
                 this.Controls.Add(OtherAccountsButton);
 
+                Button ImportMusicButton = new Button();
+                ImportMusicButton.Text = "Import a music file";
+                this.Controls.Add(ImportMusicButton);
+
                 void MusicOrVidsButton_Click(object sender3, EventArgs e3)
                 {
                     this.Controls.Remove(WelcomeBackLabel);
@@ -469,6 +473,27 @@ namespace Proyecto
                         searchedUserLabel.Text = "No user was found";
                     }
                     this.Controls.Add(searchedUserLabel);
+                }
+
+                void ImportOtherMusicButton_Click(object sender3, EventArgs e3)
+                {
+                    int size = -1;
+                    OpenFileDialog openFileDialog1 = new OpenFileDialog();
+                    DialogResult result = openFileDialog1.ShowDialog();
+
+                    if (result == DialogResult.OK)
+                    {
+                        string openFileDialog1.FileName();
+                        try
+                        {
+                            string text = File.ReadAllText(file);
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+
                 }
 
             }

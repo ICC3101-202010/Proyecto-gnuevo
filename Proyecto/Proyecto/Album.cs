@@ -19,5 +19,10 @@ namespace Proyecto
         {
             return Name;
         }
+
+        public List<Song> GetSongs()
+        {
+            return SongList;
+        }
     }
 }
