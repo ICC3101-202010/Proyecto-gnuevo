@@ -127,7 +127,7 @@ namespace Proyecto
         }
 
         //Falta poner los lugares donde van quedar
-        private void RetUserButton_Click(object sender, EventArgs e)
+       private void RetUserButton_Click(object sender, EventArgs e)
         {
             this.Controls.Remove(SpotflixLabel);
             this.Controls.Remove(NewOrRetLabel);
@@ -135,28 +135,35 @@ namespace Proyecto
             this.Controls.Remove(NewUserButton);
 
             Label RetUserDataLabel = new Label();
+            RetUserDataLabel.Location = new Point(140, 50);
             RetUserDataLabel.Text = "Please enter your account data";
+            RetUserDataLabel.Size = new Size(200, 40);
             this.Controls.Add(RetUserDataLabel);
 
             //Returning user username
             Label RetUserUsernameLabel = new Label();
+            RetUserUsernameLabel.Location = new Point(200, 100);
             RetUserUsernameLabel.Text = "Username";
             this.Controls.Add(RetUserUsernameLabel);
             TextBox RetUserUsernameTB = new TextBox();
+            RetUserUsernameTB.Location = new Point(300, 100);
             this.Controls.Add(RetUserUsernameTB);
             string username = RetUserUsernameTB.Text;
 
             //Returning user password
             Label RetUserPassLabel = new Label();
+            RetUserPassLabel.Location = new Point(200, 140);
             RetUserPassLabel.Text = "Password";
             this.Controls.Add(RetUserPassLabel);
             TextBox RetUserPassTB = new TextBox();
+            RetUserPassTB.Location = new Point(300, 140);
             this.Controls.Add(RetUserPassTB);
             string password = RetUserPassTB.Text;
 
-            Button DoneButton = new Button();
-            DoneButton.Text = "Enter";
-            this.Controls.Add(DoneButton);
+            Button RetDoneButton = new Button();
+            RetDoneButton.Text = "Enter";
+            RetDoneButton.Location = new Point(240, 200);
+            this.Controls.Add(RetDoneButton);
 
             void DoneButton_Click(object sender2, EventArgs e2)
             {
