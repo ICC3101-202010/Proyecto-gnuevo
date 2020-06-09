@@ -72,6 +72,7 @@
             this.RetUserButton.TabIndex = 3;
             this.RetUserButton.Text = "Returning";
             this.RetUserButton.UseVisualStyleBackColor = true;
+            this.RetUserButton.Click += new System.EventHandler(this.RetUserButton_Click);
             // 
             // Form1
             // 

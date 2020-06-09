@@ -67,6 +67,11 @@ namespace Proyecto
             RadioButton PrivateUserYes = new RadioButton();
             PrivateUserYes.Location = new Point(200, 220);
             this.Controls.Add(PrivateUserYes);
+            bool privateUser;
+            if (PrivateUserYes.Checked == true)
+            {
+                privateUser = true;
+            }
             Label NoLabel = new Label();
             NoLabel.Text = "No";
             NoLabel.Location = new Point(90, 240);
@@ -74,6 +79,10 @@ namespace Proyecto
             RadioButton PrivateUserNo = new RadioButton();
             PrivateUserNo.Location = new Point(200, 240);
             this.Controls.Add(PrivateUserNo);
+            if (PrivateUserNo.Checked == true)
+            {
+                privateUser = false;
+            }
 
             Label PremiumButtonLabel = new Label();
             PremiumButtonLabel.Text = "Do you wish to have a premium account?";
@@ -87,18 +96,164 @@ namespace Proyecto
             RadioButton PremiumUserYes = new RadioButton();
             PremiumUserYes.Location = new Point(200, 330);
             this.Controls.Add(PremiumUserYes);
+            bool premium;
+            if (PremiumUserYes.Checked == true)
+            {
+                premium = true;
+            }
             Label NoLabel2 = new Label();
             NoLabel2.Text = "No";
             NoLabel2.Location = new Point(200, 360);
             this.Controls.Add(NoLabel2);
             RadioButton PremiumUserNo = new RadioButton();
             PremiumUserNo.Location = new Point(240, 390);
+            if (PremiumUserNo.Checked == true)
+            {
+                premium = false;
+            }
             this.Controls.Add(PremiumUserNo);
 
             Button DoneButton = new Button();
             DoneButton.Location = new Point(300, 200);
             DoneButton.Text = "Enter";
             this.Controls.Add(DoneButton);
+
+            void DoneButton_Click(object sender2, EventArgs e2)
+            {
+                User NewUser = new User(username, email, password, privateUser, premium);
+                Spotflix.GetUserDB.Add(username, NewUser);
+            }
+        }
+
+        //Falta poner los lugares donde van quedar
+        private void RetUserButton_Click(object sender, EventArgs e)
+        {
+            this.Controls.Remove(SpotflixLabel);
+            this.Controls.Remove(NewOrRetLabel);
+            this.Controls.Remove(RetUserButton);
+            this.Controls.Remove(NewUserButton);
+
+            Label RetUserDataLabel = new Label();
+            RetUserDataLabel.Text = "Please enter your account data";
+            this.Controls.Add(RetUserDataLabel);
+
+            //Returning user username
+            Label RetUserUsernameLabel = new Label();
+            RetUserUsernameLabel.Text = "Username";
+            this.Controls.Add(RetUserUsernameLabel);
+            TextBox RetUserUsernameTB = new TextBox();
+            this.Controls.Add(RetUserUsernameTB);
+            string username = RetUserUsernameTB.Text;
+
+            //Returning user password
+            Label RetUserPassLabel = new Label();
+            RetUserPassLabel.Text = "Password";
+            this.Controls.Add(RetUserPassLabel);
+            TextBox RetUserPassTB = new TextBox();
+            this.Controls.Add(RetUserPassTB);
+            string password = RetUserPassTB.Text;
+
+            Button DoneButton = new Button();
+            DoneButton.Text = "Enter";
+            this.Controls.Add(DoneButton);
+
+            void DoneButton_Click(object sender2, EventArgs e2)
+            {
+                //Removing all previous Windows Forms elements
+                this.Controls.Remove(RetUserDataLabel);
+                this.Controls.Remove(RetUserUsernameLabel);
+                this.Controls.Remove(RetUserUsernameTB);
+                this.Controls.Remove(RetUserPassLabel);
+                this.Controls.Remove(RetUserPassTB);
+                this.Controls.Remove(DoneButton);
+
+                Label WelcomeBackLabel = new Label();
+                WelcomeBackLabel.Text = "Welcome Back!";
+                this.Controls.Add(WelcomeBackLabel);
+
+                Label OptionsLabel = new Label();
+                OptionsLabel.Text = "What do you want to do?";
+                this.Controls.Add(OptionsLabel);
+
+                
+                Button MusicOrVidsButton = new Button();
+                MusicOrVidsButton.Text = "Search for music or videos";
+                this.Controls.Add(MusicOrVidsButton);
+
+                Button PlaylistsButton = new Button();
+                PlaylistsButton.Text = "Access your playlists";
+                this.Controls.Add(PlaylistsButton);
+
+                Button OtherAccountsButton = new Button();
+                OtherAccountsButton.Text = "Look for other accounts";
+                this.Controls.Add(OtherAccountsButton);
+
+                void MusicOrVidsButton_Click(object sender3, EventArgs e3)
+                {
+                    this.Controls.Remove(WelcomeBackLabel);
+                    this.Controls.Remove(OptionsLabel);
+                    this.Controls.Remove(MusicOrVidsButton);
+                    this.Controls.Remove(PlaylistsButton);
+                    this.Controls.Remove(OtherAccountsButton);
+
+                    Label SearchLabel = new Label();
+                    SearchLabel.Text = "Search";
+                    this.Controls.Add(SearchLabel);
+
+                    TextBox SearchBar = new TextBox();
+                    this.Controls.Add(SearchBar);
+
+                }
+
+                void PlaylistsButton_Click(object sender3, EventArgs e3)
+                {
+                    this.Controls.Remove(WelcomeBackLabel);
+                    this.Controls.Remove(OptionsLabel);
+                    this.Controls.Remove(MusicOrVidsButton);
+                    this.Controls.Remove(PlaylistsButton);
+                    this.Controls.Remove(OtherAccountsButton);
+
+                    ListBox playlistsList = new ListBox();
+                    User u = Spotflix.GetUserDB[username];
+                    List<Playlist> p = u.GetPlaylist();
+                    if (p.Count == 0)
+                    {
+                        Label warningLabel = new Label();
+                        warningLabel.Text = "You have no playlists!";
+                    }
+
+                    else
+                    {
+                        foreach (Playlist i in p)
+                        {
+                            string pName = i.GetName();
+                            playlistsList.Items.Add(pName);
+                        }
+
+                        this.Controls.Add(playlistsList);
+                        string chosenPlaylist = (string)playlistsList.SelectedItem;
+                        Playlist thePlaylist = new Playlist("a", true, u);
+
+                        foreach (Playlist i in p)
+                        {
+                            if (i.GetName() == chosenPlaylist)
+                            {
+                                thePlaylist = i;
+                            }
+                        }
+
+                        ListBox mediaListBox = new ListBox();
+                        foreach (Media m in thePlaylist.GetList())
+                        {
+                            string mName = m.GetName();
+                            mediaListBox.Items.Add(mName);
+                        }
+                        this.Controls.Add(mediaListBox);
+
+                    }
+                }
+
+            }
 
         }
     }
