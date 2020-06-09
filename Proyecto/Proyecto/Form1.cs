@@ -320,8 +320,14 @@ namespace Proyecto
                         }
 
                         Filter f = new Filter();
-                        (List<Song>, List<Video>) filteredSearchResults = f.FilteredSearch(filtersUsed, search);
-                        ListBox searchResLB = new ListBox();
+                        (List<Song>, List<Video>) filteredSearchResults =
+                            f.FilteredSearch(filtersUsed, search);
+                        ListBox searchResSongLB = new ListBox();
+                        ListBox searchResVidLB = new ListBox();
+
+                        this.Controls.Add(searchResSongLB);
+                        this.Controls.Add(searchResVidLB);
+                        object choice = searchResSongLB.SelectedItem;
 
                     }
 
@@ -430,7 +436,31 @@ namespace Proyecto
                                 playlistLB.Items.Add(pName);
                             }
                             this.Controls.Add(playlistLB);
+                            string chosenPlaylist = (string)playlistLB.SelectedItem;
+                            ListBox songLB = new ListBox();
 
+                            foreach (Playlist pl in account.GetPlaylist())
+                            {
+                                if (pl.GetName() == chosenPlaylist)
+                                {
+                                    foreach (Song s in pl.GetList())
+                                    {
+                                        songLB.Items.Add(s);
+                                    }
+                                }
+                            }
+                            this.Controls.Add(songLB);
+
+                        }
+
+                        else if (selectedOption == "Follow")
+                        {
+                            account.Follow(account, Spotflix.GetUserDB[username]);
+                        }
+
+                        else if (selectedOption == "See followers")
+                        {
+                            account.GetFollowers();
                         }
 
                     }

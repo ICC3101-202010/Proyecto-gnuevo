@@ -34,7 +34,8 @@ namespace Proyecto
             Queue = queue;
             Playlists = playlists;
             Premium = premium;
-        }
+           List<User> Followers;
+    }
 
         public string GetPassword()
         {
@@ -131,9 +132,11 @@ namespace Proyecto
             Playlists.Add(a);
         }
 
-        public void Follow(object follow)
+        public void Follow(User following, User follower)
         {
-
+            User toFollow = Spotflix.GetUserDB[following.GetUsername()];
+            List<User> followersList = toFollow.GetFollowers();
+            followersList.Add(follower);
         }
 
     }
