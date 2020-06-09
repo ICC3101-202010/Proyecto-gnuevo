@@ -25,32 +25,32 @@ namespace Proyecto
 
                 if (filters.Contains(1) == true)
                 {
-                    string o1 = s.GetMetadata.Name;
-                    Options.Add(o1);
+                    string o5 = s.GetMetadata.Name;
+                    Options.Add(o5);
                 }
 
                 if (filters.Contains(2) == true)
                 {
-                    string o2 = s.GetMetadata.Artist1.Name;
-                    Options.Add(o2);
+                    string o6 = s.GetMetadata.Artist1.Name;
+                    Options.Add(o6);
                 }
 
                 if (filters.Contains(3) == true)
                 {
-                    string o3 = s.GetMetadata.Album;
-                    Options.Add(o3);
+                    string o7 = s.GetMetadata.Album.GetName();
+                    Options.Add(o7);
                 }
 
                 if (filters.Contains(4) == true)
                 {
-                    string o4 = s.GetMetadata.Genre;
-                    Options.Add(o4);
+                    string o8 = s.GetMetadata.Genre;
+                    Options.Add(o8);
                 }
 
                 string o1 = s.GetMetadata.Name;
                 string o2 = s.GetMetadata.Artist1.Name;
-                string o3 = s.GetMetadata.Album;
-                string o4 = s.GetMetadata.Gender;
+                string o3 = s.GetMetadata.Album.GetName();
+                string o4 = s.GetMetadata.GetGenre();
 
                 Options.Add(o1);
                 Options.Add(o2);
@@ -159,7 +159,7 @@ namespace Proyecto
                 List<string> Options = new List<string>();
                 string o1 = s.GetMetadata.Name;
                 string o2 = s.GetMetadata.Artist1.Name;
-                string o3 = s.GetMetadata.Album;
+                string o3 = s.GetMetadata.Album.GetName();
                 string o4 = s.GetMetadata.Genre;
 
                 Options.Add(o1);

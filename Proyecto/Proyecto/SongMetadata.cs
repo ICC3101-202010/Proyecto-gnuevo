@@ -17,5 +17,10 @@ namespace Proyecto
             Genre = genre;
             PublicationYear = publicationYear;
         }
+
+        public string GetGenre()
+        {
+            return Genre;
+        }
     }
 }
