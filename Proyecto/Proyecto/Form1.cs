@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -17,6 +18,21 @@ namespace Proyecto
         public Form1()
         {
             InitializeComponent();
+            
+        }
+
+        private void RegisterInStartup(bool isChecked)
+        {
+            RegistryKey registryKey = Registry.CurrentUser.OpenSubKey
+                    ("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            if (isChecked)
+            {
+                registryKey.SetValue("ApplicationName", Application.ExecutablePath);
+            }
+            else
+            {
+                registryKey.DeleteValue("ApplicationName");
+            }
         }
 
         private void NewUserButton_Click_1(object sender, EventArgs e)
@@ -173,7 +189,7 @@ namespace Proyecto
                 this.Controls.Remove(RetUserUsernameTB);
                 this.Controls.Remove(RetUserPassLabel);
                 this.Controls.Remove(RetUserPassTB);
-                this.Controls.Remove(DoneButton);
+                this.Controls.Remove(RetDoneButton);
 
                 Label WelcomeBackLabel = new Label();
                 WelcomeBackLabel.Text = "Welcome Back!";
@@ -331,8 +347,15 @@ namespace Proyecto
                         }
 
                         Filter f = new Filter();
-                        (List<Song>, List<Video>) filteredSearchResults =
+                        List<object> filteredSearchResults =
                             f.FilteredSearch(filtersUsed, search);
+
+                        if (filteredSearchResults.Count == 2)
+                        {
+                            object songList = filteredSearchResults[0];
+                            object vidList = filteredSearchResults[1];
+                        }
+
                         ListBox searchResSongLB = new ListBox();
                         ListBox searchResVidLB = new ListBox();
 
@@ -490,16 +513,19 @@ namespace Proyecto
 
                     if (result == DialogResult.OK)
                     {
-                        string openFileDialog1.FileName();
+                        
+                        string file = openFileDialog1.FileName;
                         try
                         {
                             string text = File.ReadAllText(file);
+                            size = text.Length;
                         }
-                        catch
+                        catch (IOException)
                         {
 
                         }
                     }
+                
 
                 }
 

@@ -11,7 +11,7 @@ namespace Proyecto
 
         List<string> names = new List<string>();
 
-        public (List<Song>, List<Video>) FilteredSearch(List<int> filters, string a)
+        public List<object> FilteredSearch(List<int> filters, string a)
         {
             List<object> FilteredRes = new List<object>();
 
@@ -73,6 +73,7 @@ namespace Proyecto
                 }
             }
 
+            FilteredRes.Add(SongResults);
 
             List<Video> SFVideos = Spotflix.GetVideoDB;
             List<Video> VidResults = new List<Video>();
@@ -133,8 +134,9 @@ namespace Proyecto
                 }
 
             }
+            FilteredRes.Add(VidResults);
 
-            return (SongResults, VidResults);
+            return FilteredRes;
         }
 
 

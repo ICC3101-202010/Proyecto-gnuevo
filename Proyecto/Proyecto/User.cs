@@ -1,22 +1,25 @@
 ﻿using System;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Proyecto
 {
-    public class User
+    [Serializable()]
+    public class User : ISerializable
     {
         private List<object> UserData;
-        private string UserName;
-        private string Email;
-        private string Password;
-        private bool PrivateAccount;   
+        private string UserName { get; set; }
+        private string Email { get; set; }
+        private string Password { get; set; }
+        private bool PrivateAccount { get; set; }
         private List<User> Followers;
         private List<Object> Following;
         private Queue<Media> Queue;
         private Dictionary<object, List<object>> Favorites;
         private List<object> Likes;
-        private bool Premium;
+        private bool Premium { get; set; }
         private List<Playlist> Playlists;
 
         public User(string name, string email, string password, bool privateAccount, bool premium)
@@ -34,8 +37,26 @@ namespace Proyecto
             Queue = queue;
             Playlists = playlists;
             Premium = premium;
-           List<User> Followers;
-    }
+            List<User> Followers;
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Name", UserName);
+            info.AddValue("Email", Email);
+            info.AddValue("Password", Password);
+            info.AddValue("Private", PrivateAccount);
+            info.AddValue("Premium", Premium);
+        }
+
+        public User(SerializationInfo info, StreamingContext context)
+        {
+            string Name = (string)info.GetValue("Name", typeof(string));
+            string Email = (string)info.GetValue("Email", typeof(string));
+            string Password = (string)info.GetValue("Password", typeof(string));
+            bool Private = (bool)info.GetValue("Private", typeof(bool));
+            bool Premium = (bool)info.GetValue("Premium", typeof(bool));
+        }
 
         public string GetPassword()
         {
